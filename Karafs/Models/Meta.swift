@@ -8,10 +8,10 @@
 import Foundation
 
 struct Meta: Codable {
-    let createdAt: String
-    let updatedAt: String
+    let createdAt: Date
+    let updatedAt: Date
     let barcode: String
-    let qrCode: String
+    let qrCode: URL
 
     enum CodingKeys: String, CodingKey {
         case createdAt

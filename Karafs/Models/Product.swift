@@ -43,8 +43,8 @@ struct Product: Codable {
     let returnPolicy: String
     let minimumOrderQuantity: Int
     let meta: Meta
-    let thumbnail: String
-    let images: [String]
+    let thumbnail: URL
+    let images: [URL]
 
     enum CodingKeys: String, CodingKey {
         case id
