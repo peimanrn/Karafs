@@ -11,7 +11,7 @@ import SwiftUI
 struct KarafsApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ProductListView()
         }
     }
 }
