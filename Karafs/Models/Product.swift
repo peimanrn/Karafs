@@ -22,7 +22,7 @@ struct ProductResponse: Codable {
     }
 }
 
-struct Product: Codable, Identifiable {
+struct Product: Codable, Identifiable, Equatable {
     let id: Int
     let title: String
     let description: String
@@ -32,7 +32,7 @@ struct Product: Codable, Identifiable {
     let rating: Double
     let stock: Int
     let tags: [String]
-    let brand: String
+    let brand: String?
     let sku: String
     let weight: Int
     let dimensions: Dimensions
@@ -69,6 +69,10 @@ struct Product: Codable, Identifiable {
         case meta
         case thumbnail
         case images
+    }
+
+    static func == (lhs: Product, rhs: Product) -> Bool {
+        lhs.id == rhs.id
     }
 
     static var dummyData: Product {

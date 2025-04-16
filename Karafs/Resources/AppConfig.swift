@@ -10,6 +10,6 @@ import Foundation
 struct AppConfig {
     static let shared = AppConfig()
 
-    var baseURL: URL = URL(string: "https://dummyjson.com/")!
+    var baseURL: URL = URL(string: "https://dummyjson.com")!
 }
 

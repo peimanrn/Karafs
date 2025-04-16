@@ -10,61 +10,60 @@ import SwiftUI
 struct ProductRow: View {
 
     let product: Product
-
     var body: some View {
-        HStack {
-            ProductImage(url: product.thumbnail, rating: product.rating)
+        HStack(alignment: .top, spacing: 16) {
+            ProductImage(url: product.thumbnail, rating: product.rating, size: 80)
+
+            VStack(alignment: .leading, spacing: 8) {
+                Text(product.title)
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                    .lineLimit(2)
+
+                ratingStars
+            }
+
+            Spacer()
+        }
+        .padding(12)
+        .background(Color(.systemBackground))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
+    }
+
+    private var ratingStars: some View {
+        let fullStars = Int(product.rating)
+        let hasHalfStar = (product.rating - Double(fullStars)) >= 0.25 && (product.rating - Double(fullStars)) < 0.75
+        let starColor: Color = {
+            switch product.rating {
+            case ..<3.0: return .red
+            case 3.0..<4.0: return .orange
+            default: return .green
+            }
+        }()
+
+        return HStack(spacing: 4) {
+            ForEach(0..<5) { index in
+                if index < fullStars {
+                    Image(systemName: "star.fill")
+                } else if index == fullStars && hasHalfStar {
+                    Image(systemName: "star.leadinghalf.filled")
+                } else {
+                    Image(systemName: "star")
+                }
+            }
+            .foregroundColor(starColor)
+            .font(.caption)
+
+            Text(String(format: "%.1f", product.rating))
+                .font(.caption)
+                .foregroundColor(.secondary)
         }
     }
 }
 
 #Preview {
     ProductRow(
-        product: Product(
-            id: 1,
-            title: "iPhone 16 Pro Max",
-            description: "The best iPhone in the world",
-            category: "Phone",
-            price: 2000,
-            discountPercentage: 5,
-            rating: 3.5,
-            stock: 24,
-            tags: ["Phone", "Apple"],
-            brand: "Apple",
-            sku: "iphone16promax256gb",
-            weight: 400,
-            dimensions: Dimensions(width: 200, height: 150, depth: 50),
-            warrantyInformation: "1 Year",
-            shippingInformation: "By Air",
-            availabilityStatus: "Available",
-            reviews: [
-                Review(
-                    rating: 5,
-                    comment: "A great phone",
-                    date: Date(),
-                    reviewerName: "Ali",
-                    reviewerEmail: "alimail@mail.com"
-                ),
-                Review(
-                    rating: 4.3,
-                    comment: "A great phone but heavy",
-                    date: Date(),
-                    reviewerName: "Mohammad",
-                    reviewerEmail: "momohami@gmail.com"
-                ),
-            ],
-            returnPolicy: "If dammaged return within 7 days",
-            minimumOrderQuantity: 1,
-            meta: Meta(
-                createdAt: Date(),
-                updatedAt: Date(),
-                barcode: "123123123123",
-                qrCode: URL(string: "https://assets.dummyjson.com/public/qr-code.png")!
-            ),
-            thumbnail: URL(string: "https://cdn.dummyjson.com/products/images/beauty/Red%20Nail%20Polish/thumbnail.png")!,
-            images: [
-                URL(string: "https://cdn.dummyjson.com/products/images/beauty/Red%20Nail%20Polish/1.png")!
-            ]
-        )
+        product: Product.dummyData
     )
 }
